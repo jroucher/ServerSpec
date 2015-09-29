@@ -1,5 +1,7 @@
 require 'rake'
 require 'rspec/core/rake_task'
+#require 'specinfra'
+require 'json'
 
 task :spec    => 'spec:all'
 task :default => :spec
@@ -25,3 +27,10 @@ namespace :spec do
     end
   end
 end
+
+#def run_task(verbose)
+#    json = File.join("#{$REPORTS}", "current", "#{target}.json")
+#    @rspec_opts = ["--format", "json", "--out", json]
+#    system("env TARGET_HOST=#{target} TARGET_TAGS=#{(tags || []).join(",")} #{spec_command}")
+#    status(target, json) if verbos
+#end
