@@ -37,6 +37,18 @@ describe "distro" do
   puts "La distro empleada es: #{host_inventory['platform']}"
 end
 
+describe "memcached" do
+  it "should use almost all memory" do
+    total = command("vmstat -s | head -1").stdout # 
+    total = /\d+/.match(total)[0].to_i
+    total /= 1024
+    args = process("memcached").args # 
+    memcached = /-m (\d+)/.match(args)[1].to_i
+    (total - memcached).should be > 0
+    (total - memcached).should be < 2000
+  end
+end
+
 #describe "memtotal" do
 #  puts "Memoria Total: #{host_inventory['memory']['total']}"
 #end

@@ -5,11 +5,12 @@ require 'json'
 
 task :spec    => 'spec:all'
 task :default => :spec
+$REPORTS ="./reports"
 
 namespace :spec do
   targets = []
   Dir.glob('./spec/*').each do |dir|
-    next unless File.directory?(dir)
+    next unless File.directory? (dir)
     target = File.basename(dir)
     target = "_#{target}" if target == "default"
     targets << target
@@ -22,15 +23,16 @@ namespace :spec do
     original_target = target == "_default" ? target[1..-1] : target
     desc "Run serverspec tests to #{original_target}"
     RSpec::Core::RakeTask.new(target.to_sym) do |t|
+      json = File.join("#{$REPORTS}", "#{target}.json")
+      t.rspec_opts = ["--format", "json", "--out", json]
+      puts("paso")
       ENV['TARGET_HOST'] = original_target
       t.pattern = "spec/#{original_target}/*_spec.rb"
     end
   end
-end
 
-#def run_task(verbose)
-#    json = File.join("#{$REPORTS}", "current", "#{target}.json")
-#    @rspec_opts = ["--format", "json", "--out", json]
-#    system("env TARGET_HOST=#{target} TARGET_TAGS=#{(tags || []).join(",")} #{spec_command}")
-#    status(target, json) if verbos
-#end
+  def run_task(verbose)
+    system("env TARGET_HOST=#{target} #{spec_command}")
+    status(target, json) if verbose
+  end
+end
