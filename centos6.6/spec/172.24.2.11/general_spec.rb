@@ -4,8 +4,9 @@ require 'specinfra'
 describe "Operating System" do
   distro = host_inventory['platform'].to_s
   puts "La distro empleada es: #{distro}"
-  describe distro do
+  describe 'redhat' do
     it {distro.should match('redhat')}
+
   end
 end
 
