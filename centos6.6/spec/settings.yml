@@ -1,0 +1,19 @@
+# General Settings
+
+disk_size: 49000000
+swap_size: 250000
+memory_size: 1000000
+
+#NodeJS settings
+node_version: 'v0.10.40'
+#node_version: 'v0.12.7'        #version de PaaS
+
+#MongoDB settings
+mongo_version: 'v3.0.7'
+#mongo_version: 'v3.0.6'        #version de PaaS
+
+#MySQL settings
+mysql_version: '5.1.73'
+#mysql_version: '5.6'          #version de PaaS
+
+

@@ -1,4 +1,5 @@
 require 'serverspec'
+require 'specinfra'
 
 describe 'Tomcat Daemon' do
   it 'is listening on port 8080' do

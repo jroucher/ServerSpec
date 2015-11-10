@@ -1,5 +1,12 @@
 require 'spec_helper'
 require 'specinfra'
+require 'yaml'
+
+parsed = begin
+  config = YAML.load(File.open("./spec/settings.yml"))
+rescue ArgumentError => e
+  puts "Could not parse YAML: #{e.message}"
+end
 
 describe "Operating System" do
   distro = host_inventory['platform'].to_s
@@ -15,17 +22,17 @@ describe "Disk size" do
   puts "SDA-1 device size: #{host_inventory['filesystem']['/dev/sda1']['kb_size']}"
   puts "SDA-2 device size: #{host_inventory['filesystem']['/dev/sda2']['kb_size']}"
   it "Principal HDD Should be 49gb" do
-    host_inventory['filesystem']['/dev/sda2']['kb_size'].to_i.should >= 49000000
+    host_inventory['filesystem']['/dev/sda2']['kb_size'].to_i.should >= config['disk_size']
   end
   it "Swap HDD Should be 250mb" do
-    host_inventory['filesystem']['/dev/sda2']['kb_size'].to_i.should >= 250000
+    host_inventory['filesystem']['/dev/sda2']['kb_size'].to_i.should >= config['swap_size']
   end
 end
 
 describe "Memory" do
   puts "Memoria Total: #{host_inventory['memory']['total']}"
   it "Total memory" do
-    host_inventory['memory']['total'].to_i.should >= 1000000
+    host_inventory['memory']['total'].to_i.should >= config['memory_size']
   end 
 end
 

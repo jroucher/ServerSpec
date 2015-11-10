@@ -1,0 +1,9 @@
+require 'spec_helper'
+
+describe 'NodeJS' do 
+  puts('Ejecutando puebas de NodeJS')
+
+  describe command('node --version') do 
+    its(:stdout) { should contain('v0.10.40')') }
+  end
+end

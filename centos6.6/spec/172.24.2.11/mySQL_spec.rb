@@ -1,5 +1,12 @@
 require 'spec_helper'
 require 'specinfra'
+require 'yaml'
+
+parsed = begin
+  config = YAML.load(File.open("./spec/settings.yml"))
+rescue ArgumentError => e
+  puts "Could not parse YAML: #{e.message}"
+end
 
 mysql_name = ''
 case os[:family]
@@ -12,7 +19,6 @@ when 'redhat'
   mysql_name = 'mysqld'
   mysql_config_file = '/etc/my.cnf'
   mysql_server_packages = %w{mysql-server}
-  collectd_plugin_dir = '/etc/collectd.d'
 end
 
 describe "MySQL server packages are installed" do
@@ -24,7 +30,7 @@ describe "MySQL server packages are installed" do
 end
 
 describe service(mysql_name) do
-  it { should be_enabled }
+#  it { should be_enabled }
   it { should be_running }
 end
 
@@ -35,3 +41,8 @@ end
 describe file(mysql_config_file) do
   it { should be_file }
 end
+  
+describe command('mysql -h localhost -V') do 
+  its(:stdout) { should contain(config['mysql_version']).after('mysql  Ver 14.14 Distrib ') }
+end
+
