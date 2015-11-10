@@ -1,6 +1,13 @@
 require 'serverspec'
 require 'specinfra'
 
+require 'yaml'
+parsed = begin
+  config = YAML.load(File.open("./spec/settings.yml"))
+rescue ArgumentError => e
+  puts "Could not parse YAML: #{e.message}"
+end
+
 describe 'Tomcat Daemon' do
   it 'is listening on port 8080' do
     expect(port(8080)).to be_listening
