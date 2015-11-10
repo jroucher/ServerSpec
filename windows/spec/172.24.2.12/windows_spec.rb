@@ -17,7 +17,7 @@ describe "Operating System" do
   end
 
   describe command('& ipconfig') do
-    its(:stdout) { should match /.172\.24\.2\.12/ }
+    its(:stdout) { should contain("172.24.2.12") }
   end
 
   describe command('WMIC memorychip get capacity') do
