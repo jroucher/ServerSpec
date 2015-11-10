@@ -1,4 +1,12 @@
 require 'spec_helper'
+require 'yaml'
+
+parsed = begin
+  config = YAML.load(File.open("./spec/settings.yml"))
+rescue ArgumentError => e
+  puts "Could not parse YAML: #{e.message}"
+end
+
 describe 'Apache' do
   puts ('Ejecutando pruebas de apacahe')
 
@@ -7,7 +15,7 @@ describe 'Apache' do
   
     its(:stdout) { should contain('conf/httpd.conf').after('SERVER_CONFIG_FILE') }
   
-    its(:stdout) { should contain('Apache/2.2.15').before('Server built') }
+    its(:stdout) { should contain("Apache/#{config['apache_version']}").before('Server built') }
   end
   
   describe user('apache') do

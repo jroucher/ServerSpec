@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'yaml'
 
 parsed = begin
   config = YAML.load(File.open("./spec/settings.yml"))
