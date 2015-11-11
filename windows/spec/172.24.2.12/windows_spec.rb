@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'specinfra'
 
 describe "Operating System" do
   distro = host_inventory['platform'].to_s
@@ -8,18 +7,17 @@ describe "Operating System" do
     it {distro.should match "windows"}
   end
 
+  # tamaño del disco
   describe command('WMIC LOGICALDISK where drivetype=3 get size') do
     its(:stdout) {should match /Size(.|\n|\r)*53316939776/ }
   end
 
-  describe port(80) do
-    it { should be_listening }
-  end
-
+  # tiene ip asignada
   describe command('& ipconfig') do
     its(:stdout) { should contain("172.24.2.12") }
   end
-
+  
+  # tamaño de la memoria
   describe command('WMIC memorychip get capacity') do
     its(:stdout) {should match /(.|\n|\r)*1073741824/ }
   end
