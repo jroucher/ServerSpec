@@ -1,5 +1,12 @@
 require 'serverspec'
 require 'net/ssh'
+require 'yaml'
+
+parsed = begin
+  $config = YAML.load(File.open("./spec/settings.yml"))
+rescue ArgumentError => e
+  puts "Could not parse YAML: #{e.message}"
+end
 
 set :backend, :ssh
 

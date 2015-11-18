@@ -20,3 +20,31 @@ mysql_version: '5.1.73'
 apache_version: '2.2.15'
 #apache_version: '2.2.3'          #version de PaaS
 
+lang: en_US
+title: Welcome to the VCCW
+rewrite_structure: /archives/%post_id%
+
+#
+## WordPress User
+
+admin_user: miya
+admin_pass: "1111"
+
+
+## WordPress Default Plugins
+## Plugin's slug or url to the plugin's slug.
+plugins:
+  - dynamic-hostname
+  - wp-total-hacks
+  - tinymce-templates
+
+#
+# WordPress Default Theme
+# Theme's slug or url to the theme's .zip.
+#
+theme: twentyfifteen
+
+# WordPress Options
+#
+options:
+  blogdescription: Hello VCCW.
