@@ -9,7 +9,7 @@ describe 'Apache', apache:true do
   
     its(:stdout) { should contain('conf/httpd.conf').after('SERVER_CONFIG_FILE') }
   
-    its(:stdout) { should contain("Apache/#{$config['apache_version']}").before('Server built') }
+    its(:stdout) { should contain("Apache/#{$config['apache_version']}").after('Server version') }
   end
   
   describe user('apache') do
@@ -28,4 +28,3 @@ describe 'Apache', apache:true do
     it { should be_running }
   end
 end
-

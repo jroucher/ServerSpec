@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "WordPress", wordpress:true do
+  puts "Ejecutando pruebas de wordpress"
   describe command("wp user get #{Shellwords.shellescape($config['admin_user'])} --format=json | jq -r .roles") do
     let(:disable_sudo) { true }
     its(:exit_status) { should eq 0 }

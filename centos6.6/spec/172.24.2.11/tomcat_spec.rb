@@ -2,6 +2,7 @@ require 'serverspec'
 require 'specinfra'
 
 describe 'Tomcat', tomcat:true do
+  puts "Ejecutando pruebas de Tomcat"
   describe 'Tomcat Daemon' do
     it 'is listening on port 8080' do
       expect(port(8080)).to be_listening

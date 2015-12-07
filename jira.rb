@@ -9,41 +9,85 @@ password = "VDC.ruby"
 options = {
             :username  => username,
             :password  => password,
+            #:site      => 'https://jirapdi.tid.es',
             :site      => 'https://pre-epg-jira-01',
 	    :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
             :context_path => '',
-            #:context_path => '/secure/Dashboard.jspa',
-	    #:use_ssl   => true,
             :auth_type => :basic
           }
 
 client = JIRA::Client.new(options)
 
-#if ARGV.length == 0
-#  # If not passed any command line arguments, open a browser and prompt the
-#  # user for the OAuth verifier.
-#  request_token = client.request_token
-#  puts "Opening #{request_token.authorize_url}"
-#  system "open #{request_token.authorize_url}"
-#
-#  puts "Enter the oauth_verifier: "
-#  oauth_verifier = gets.strip
-#
-#  access_token = client.init_access_token(:oauth_verifier => oauth_verifier)
-#  puts "Access token: #{access_token.token} secret: #{access_token.secret}"
-#elsif ARGV.length == 2
-#  # Otherwise assume the arguments are a previous access token and secret.
-#  access_token = client.set_access_token(ARGV[0], ARGV[1])
-#else
-#  # Script must be passed 0 or 2 arguments
-#  raise "Usage: #{$0} [ token secret ]"
-#end
-
 # Show all projects
 projects = client.Project.all
 
 projects.each do |project|
-  puts "Project -> key: #{project.key}, name: #{project.name}"
+  puts "Project -> [#{project.id}] key: #{project.key}, name: #{project.name}"
 end
-#issue = client.Issue.find('SAMPLEPROJECT-1')
-#pp issue
+
+# issue del proyecto
+#project = client.Project.find('VDC')
+#pp project.name
+#project.issues.each do |issue|
+#  puts "#{issue.id} - (#{issue.issuetype.id} - #{issue.issuetype.name}) #{issue.fields['summary']}" 
+#end
+#if project.issues.count == 0
+#  puts "\tNo Issues in project #{project.name}"
+#end
+
+# busqueda mediante JQL
+#query_options = {
+#        :fields => [],
+#        :start_at => 0,
+#        :max_results => 100000
+#}
+#client.Issue.jql('project = VDC  AND type="Test Case"', query_options).each do |issue|
+#  pp "(#{issue.id}) #{issue.summary}"
+#  
+#end
+
+## Mostrar los tipos
+#client.Issuetype.all.each do |issue|
+#  pp "(#{issue.id}) #{issue.name}"
+#end
+
+# Crear una ejecución
+#issue = client.Issue.find('Apache')
+
+#def createExecution(project, parentId, summary, description)
+def createExecution(project, parentId, summary, status, description)
+  username = "vdc.ruby"
+  password = "VDC.ruby"
+
+  options = {
+            :username  => username,
+            :password  => password,
+            #:site      => 'https://jirapdi.tid.es',
+            :site      => 'https://pre-epg-jira-01',
+	    :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
+            :context_path => '',
+            :auth_type => :basic
+          }
+
+  client = JIRA::Client.new(options)
+
+  issue2 = client.Issue.build
+  result=issue2.save({"fields"=>{
+  		"parent" => {"id" => parentId.to_s},
+  		"summary" => summary,
+		"status" => {"id"=>status},		# Aun no he encontrado como actualizar el status 
+		"description" =>  description,
+  		"project" => {"id" => project.to_s},
+  		"issuetype" => {"id" => "13"}
+  	    }})
+  if result
+    puts "Exection '#{summary}' create successfully"
+  else
+    puts "Exection '#{summary}' produce error in creation"
+  end
+  issue2.fetch
+end
+
+
+#createExecution(32330, 1961395, "Mediante funcion", "Esta es una prueba para verificar que la automatizacion de PaaS guarda correctamente las ejecuciones")
+createExecution(32330, 1961395, "Mediante funcion", "10006", "Esta es una prueba para verificar que la automatizacion de PaaS guarda correctamente las ejecuciones")

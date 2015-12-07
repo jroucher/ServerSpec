@@ -1,8 +1,9 @@
 # General Settings
 
-disk_size: 49000000
-swap_size: 250000
-memory_size: 1000000
+disk2_size: 49000000  #DISK
+disk1_size: 250000  #BOOT
+swap_size: 2000000  #SWAP
+memory_size: 1000000 #RAM
 
 #NodeJS settings
 node_version: 'v0.10.40'

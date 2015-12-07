@@ -14,6 +14,7 @@ when 'redhat'
 end
 
 describe "MySQL", mysql:true do
+  puts "Ejecutando pruebas de Mysql"
   describe "MySQL server packages are installed" do
     mysql_server_packages.each do |pkg|
       describe package(pkg) do

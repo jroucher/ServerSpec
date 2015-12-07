@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "jBoss", jboss:true do
+  puts "Ejecutando pruebas de Jboss"
   describe user('jboss') do
     it { should exist }
   end
