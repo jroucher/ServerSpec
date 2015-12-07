@@ -3,27 +3,27 @@ require 'pp'
 require 'jira'
 
 
-username = "vdc.ruby"
-password = "VDC.ruby"
+#username = "vdc.ruby"
+#password = "VDC.ruby"
 
-options = {
-            :username  => username,
-            :password  => password,
-            #:site      => 'https://jirapdi.tid.es',
-            :site      => 'https://pre-epg-jira-01',
-	    :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
-            :context_path => '',
-            :auth_type => :basic
-          }
+#options = {
+#            :username  => username,
+#            :password  => password,
+#            #:site      => 'https://jirapdi.tid.es',
+#            :site      => 'https://pre-epg-jira-01',
+#	    :ssl_verify_mode => OpenSSL::SSL::VERIFY_NONE,
+#            :context_path => '',
+#            :auth_type => :basic
+#          }
 
-client = JIRA::Client.new(options)
+#client = JIRA::Client.new(options)
 
 # Show all projects
-projects = client.Project.all
+#projects = client.Project.all
 
-projects.each do |project|
-  puts "Project -> [#{project.id}] key: #{project.key}, name: #{project.name}"
-end
+#projects.each do |project|
+#  puts "Project -> [#{project.id}] key: #{project.key}, name: #{project.name}"
+#end
 
 # issue del proyecto
 #project = client.Project.find('VDC')
@@ -54,8 +54,8 @@ end
 # Crear una ejecución
 #issue = client.Issue.find('Apache')
 
-#def createExecution(project, parentId, summary, description)
-def createExecution(project, parentId, summary, status, description)
+def createExecution(project, parentId, summary, description)
+#def createExecution(project, parentId, summary, status, description)
   username = "vdc.ruby"
   password = "VDC.ruby"
 
@@ -75,7 +75,7 @@ def createExecution(project, parentId, summary, status, description)
   result=issue2.save({"fields"=>{
   		"parent" => {"id" => parentId.to_s},
   		"summary" => summary,
-		"status" => {"id"=>status},		# Aun no he encontrado como actualizar el status 
+		#"status" => {"id"=>status},		# Aun no he encontrado como actualizar el status 
 		"description" =>  description,
   		"project" => {"id" => project.to_s},
   		"issuetype" => {"id" => "13"}
@@ -89,5 +89,5 @@ def createExecution(project, parentId, summary, status, description)
 end
 
 
-#createExecution(32330, 1961395, "Mediante funcion", "Esta es una prueba para verificar que la automatizacion de PaaS guarda correctamente las ejecuciones")
-createExecution(32330, 1961395, "Mediante funcion", "10006", "Esta es una prueba para verificar que la automatizacion de PaaS guarda correctamente las ejecuciones")
+createExecution(32330, 1961395, "Mediante funcion", "Esta es una prueba para verificar que la automatizacion de PaaS guarda correctamente las ejecuciones")
+#createExecution(32330, 1961395, "Mediante funcion", "10006", "Esta es una prueba para verificar que la automatizacion de PaaS guarda correctamente las ejecuciones")

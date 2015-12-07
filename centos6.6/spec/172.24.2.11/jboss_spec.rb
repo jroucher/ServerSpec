@@ -1,7 +1,21 @@
 require 'spec_helper'
 
+
 describe "jBoss", jboss:true do
-  puts "Ejecutando pruebas de Jboss"
+  before(:all){
+    puts "\nEjecutando pruebas de Jboss"
+    $errores = ""
+  }
+  after(:each) do |test| 
+    if test.exception != nil
+      $errores = $errores << "\nError en: #{test.description}"
+    end
+  end
+  after(:all) {
+    puts $errores
+    $execution.create($config['jira_project_id'],$config['jira_jboss_id'],'Errores detectados en jBoss',$errores)
+  }
+
   describe user('jboss') do
     it { should exist }
   end

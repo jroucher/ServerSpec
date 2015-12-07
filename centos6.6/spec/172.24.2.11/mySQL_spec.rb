@@ -14,7 +14,20 @@ when 'redhat'
 end
 
 describe "MySQL", mysql:true do
-  puts "Ejecutando pruebas de Mysql"
+  before(:all){
+    puts "\nEjecutando pruebas de Mysql"
+    $errores = ""
+  }
+  after(:each) do |test| 
+    if test.exception != nil
+      $errores = $errores << "\nError en: #{test.description}"
+    end
+  end
+  after(:all) {
+    puts $errores
+    $execution.create($config['jira_project_id'],$config['jira_mysql_id'],'Errores detectados en MySQL',$errores)
+  }
+
   describe "MySQL server packages are installed" do
     mysql_server_packages.each do |pkg|
       describe package(pkg) do

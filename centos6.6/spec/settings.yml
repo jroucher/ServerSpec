@@ -1,51 +1,54 @@
-# General Settings
+jira_project_id: '32330'
 
+#Linux Settings
 disk2_size: 49000000  #DISK
 disk1_size: 250000  #BOOT
 swap_size: 2000000  #SWAP
 memory_size: 1000000 #RAM
+jira_linux_id: '1961393'
 
 #NodeJS settings
 node_version: 'v0.10.40'
+jira_node_id: '1961397'
 #node_version: 'v0.12.7'        #version de PaaS
 
 #MongoDB settings
 mongo_version: 'v3.0.7'
+jira_mongo_id: '1961394'
 #mongo_version: 'v3.0.6'        #version de PaaS
 
 #MySQL settings
 mysql_version: '5.1.73'
+jira_mysql_id: '1961396'
 #mysql_version: '5.6'          #version de PaaS
 
 #Apache settings
 apache_version: '2.2.15'
+jira_apache_id: '1961395'
 #apache_version: '2.2.3'          #version de PaaS
 
-lang: en_US
-title: Welcome to the VCCW
-rewrite_structure: /archives/%post_id%
+#jBoss settings
+jboss_version: ''
+jira_jboss_id: '1991244'
 
-#
-## WordPress User
+#TomCat settings
+tomcat_version: ''
+jira_tomcat_id: '1961398'
 
-admin_user: miya
-admin_pass: "1111"
+#MongoDB settings
+mongo_version: ''
 
-
-## WordPress Default Plugins
-## Plugin's slug or url to the plugin's slug.
+# WordPress settings
+lang: 'en_US'
+title: 'Welcome to the VCCW'
+rewrite_structure: '/archives/%post_id%'
+admin_user: 'miya'
+admin_pass: '1111'
+jira_wordpress_id: '1991265'
 plugins:
   - dynamic-hostname
   - wp-total-hacks
   - tinymce-templates
-
-#
-# WordPress Default Theme
-# Theme's slug or url to the theme's .zip.
-#
 theme: twentyfifteen
-
-# WordPress Options
-#
 options:
   blogdescription: Hello VCCW.

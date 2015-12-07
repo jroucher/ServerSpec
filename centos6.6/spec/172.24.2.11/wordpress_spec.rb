@@ -1,7 +1,20 @@
 require 'spec_helper'
 
 describe "WordPress", wordpress:true do
-  puts "Ejecutando pruebas de wordpress"
+  before(:all) {
+    $errores = ""
+    puts "\nEjecutando pruebas de wordpress"
+  }
+  after(:each) do |test| 
+    if test.exception != nil
+      $errores = $errores << "\nError en: #{test.description}"
+    end
+  end
+  after(:all) {
+    puts $errores
+    $execution.create($config['jira_project_id'],$config['jira_wordpress_id'],'Errores detectados en WordPress',$errores)
+  }
+
   describe command("wp user get #{Shellwords.shellescape($config['admin_user'])} --format=json | jq -r .roles") do
     let(:disable_sudo) { true }
     its(:exit_status) { should eq 0 }

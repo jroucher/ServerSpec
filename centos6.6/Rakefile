@@ -20,7 +20,6 @@ namespace :spec do
 
   task :all     => targets
   task :default => :all
-
   targets.each do |target|
 
     original_target = target == "_default" ? target[1..-1] : target
@@ -34,9 +33,9 @@ namespace :spec do
     end
   end
 
-  def run_task(verbose)
-    system("env TARGET_HOST=#{target} #{spec_command}")
-    status(target, json) if verbose
-  end
+#  def run_task(verbose)
+#    system("env TARGET_HOST=#{target} #{spec_command}")
+#    status(target, json) if verbose
+#  end
 
 end

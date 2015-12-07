@@ -1,8 +1,22 @@
 require 'serverspec'
 require 'specinfra'
 
+
 describe 'Tomcat', tomcat:true do
-  puts "Ejecutando pruebas de Tomcat"
+  before(:all) {
+    puts "\nEjecutando pruebas de Tomcat"
+    $errores = ""
+  }
+  after(:each) do |test| 
+    if test.exception != nil
+      $errores = $errores << "\nError en: #{test.description}"
+    end
+  end
+  after(:all) {
+    puts $errores
+    $execution.create($config['jira_project_id'],$config['jira_tomcat_id'],'Errores detectados en TomCat',$errores)
+  }
+
   describe 'Tomcat Daemon' do
     it 'is listening on port 8080' do
       expect(port(8080)).to be_listening

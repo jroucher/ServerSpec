@@ -1,8 +1,20 @@
 require 'spec_helper'
 
 describe 'Apache', apache:true do
-#describe 'Apache' do
-  puts ('Ejecutando pruebas de apacahe')
+  before(:all) {
+    $errores = ""
+    puts "\nEjecutando pruebas de apache"
+  }
+  after(:each) do |test| 
+    if test.exception != nil
+      puts "\nError en: #{test.description}"
+      $errores = $errores << "\nError en: #{test.description}"
+    end
+  end
+  after(:all) {
+    puts $errores
+    $execution.create($config['jira_project_id'],$config['jira_apache_id'],'Errores detectados en Apache', $errores)
+  }
 
   describe command('apachectl -V') do
     its(:stdout) { should contain('Prefork').from(/^Server MPM/).to(/^Server compiled/) }
