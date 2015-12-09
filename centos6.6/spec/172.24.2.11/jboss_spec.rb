@@ -13,7 +13,12 @@ describe "jBoss", jboss:true do
   end
   after(:all) {
     puts $errores
-    $execution.create($config['jira_project_id'],$config['jira_jboss_id'],'Errores detectados en jBoss',$errores)
+    if $errores == "" 
+      $errores = 'No se han encontrado errores durante las pruebas.'
+      $execution.create($config['jira_project_id'],$config['jira_jboss_id'],'jBoss tests superados',$errores)
+    else
+      $execution.create($config['jira_project_id'],$config['jira_jboss_id'],'Errores detectados en jBoss',$errores)
+    end
   }
 
   describe user('jboss') do

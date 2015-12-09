@@ -17,12 +17,21 @@ describe "Operating System", linux:true do
   }
   after(:each) do |test| 
     if test.exception != nil
-      $errores = $errores << "\nError en: #{test.description}"
+      $errores = $errores << "\nError en: \n " 
+      $errores = $errores << test.exception.to_s
+
     end
   end
   after(:all) {
     puts $errores
-    $execution.create($config['jira_project_id'],$config['jira_linux_id'],'Errores detectados en linux',$errores)
+    if $config['update_jira'] == true
+      if $errores == "" 
+        $errores = 'No se han encontrado errores durante las pruebas.'
+        $execution.create($config['jira_project_id'],$config['jira_linux_id'],'Linux tests superados',$errores)
+      else
+        $execution.create($config['jira_project_id'],$config['jira_linux_id'],'Errores detectados en linux',$errores)
+      end 
+    end
   }
 
   describe distro do
@@ -48,19 +57,16 @@ describe "Operating System", linux:true do
       it {should >= $config['memory_size']}
     end 
   end
-
-
-
-   describe "Network" do #new
-      describe interface ("eth1") do 
-        it {should exist}
-      end
+  describe "Network" do #new
+    describe interface ("eth1") do 
+      it {should exist}
+    end
      
-      describe command("ifconfig") do
-        it(:stdout) {should contain('172.').from(/^eth1/).to(/^Bcast/)}
-      end
-   end
-   
-
+    describe command("ifconfig") do 
+      its(:stdout) {
+        should contain('174.').from('eth1').to('Bcast')
+      }
+    end
+  end
 
 end

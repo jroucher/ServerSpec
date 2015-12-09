@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Internet Information System" d
+describe "Internet Information System", iis: true do 
   puts('Lanzando pruebas de IIS')
 
   describe port(80) do

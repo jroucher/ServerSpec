@@ -25,7 +25,12 @@ describe "MySQL", mysql:true do
   end
   after(:all) {
     puts $errores
-    $execution.create($config['jira_project_id'],$config['jira_mysql_id'],'Errores detectados en MySQL',$errores)
+    if $errores == "" 
+      $errores = 'No se han encontrado errores durante las pruebas.'
+      $execution.create($config['jira_project_id'],$config['jira_mysql_id'],'MySQL tests superados',$errores)
+    else
+      $execution.create($config['jira_project_id'],$config['jira_mysql_id'],'Errores detectados en MySQL',$errores)
+    end
   }
 
   describe "MySQL server packages are installed" do
@@ -41,7 +46,7 @@ describe "MySQL", mysql:true do
     it { should be_running }
   end
   
-  describe port(3306) do
+  describe port($config['mysql_port']) do
     it { should be_listening }
   end
   

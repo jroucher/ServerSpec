@@ -14,12 +14,18 @@ describe 'Tomcat', tomcat:true do
   end
   after(:all) {
     puts $errores
-    $execution.create($config['jira_project_id'],$config['jira_tomcat_id'],'Errores detectados en TomCat',$errores)
+    if $errores == "" 
+      $errores = 'No se han encontrado errores durante las pruebas.'
+      $execution.create($config['jira_project_id'],$config['jira_tomcat_id'],'TomCat tests superados',$errores)  
+    else
+      $execution.create($config['jira_project_id'],$config['jira_tomcat_id'],'Errores detectados en TomCat',$errores)  
+    end
   }
+  
 
   describe 'Tomcat Daemon' do
     it 'is listening on port 8080' do
-      expect(port(8080)).to be_listening
+      expect(port($config['tomcat_port'])).to be_listening
     end
     it 'has a running service of tomcat' do
       expect(service('tomcat7')).to be_running

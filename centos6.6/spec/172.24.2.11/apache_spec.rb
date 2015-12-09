@@ -11,10 +11,16 @@ describe 'Apache', apache:true do
       $errores = $errores << "\nError en: #{test.description}"
     end
   end
-  after(:all) {
+  after(:all) { 
     puts $errores
-    $execution.create($config['jira_project_id'],$config['jira_apache_id'],'Errores detectados en Apache', $errores)
+    if $errores == "" 
+      $errores = 'No se han encontrado errores durante las pruebas.'
+      $execution.create($config['jira_project_id'],$config['jira_apache_id'],'Apache tests superados', $errores)
+    else
+      $execution.create($config['jira_project_id'],$config['jira_apache_id'],'Errores detectados en Apache', $errores)
+    end
   }
+  
 
   describe command('apachectl -V') do
     its(:stdout) { should contain('Prefork').from(/^Server MPM/).to(/^Server compiled/) }
@@ -32,7 +38,7 @@ describe 'Apache', apache:true do
     it { should be_installed }
   end
   
-  describe port(80) do
+  describe port($config['apache_port']) do
     it { should be_listening }
   end
   

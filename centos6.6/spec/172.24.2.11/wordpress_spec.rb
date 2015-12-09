@@ -12,8 +12,14 @@ describe "WordPress", wordpress:true do
   end
   after(:all) {
     puts $errores
-    $execution.create($config['jira_project_id'],$config['jira_wordpress_id'],'Errores detectados en WordPress',$errores)
+    if $errores == "" 
+      $errores = 'No se han encontrado errores durante las pruebas.'
+      $execution.create($config['jira_project_id'],$config['jira_wordpress_id'],'WordPress tests superados',$errores)
+    else
+      $execution.create($config['jira_project_id'],$config['jira_wordpress_id'],'Errores detectados en WordPress',$errores)
+    end
   }
+  
 
   describe command("wp user get #{Shellwords.shellescape($config['admin_user'])} --format=json | jq -r .roles") do
     let(:disable_sudo) { true }

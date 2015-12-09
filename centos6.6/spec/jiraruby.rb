@@ -30,9 +30,9 @@ class JiraRuby
     		"issuetype" => {"id" => "13"}
     	    }})
     if result
-      puts "Exection '#{summary}' create successfully"
+      puts "Execution '#{summary}' create successfully"
     else
-      puts "Exection '#{summary}' produce error in creation"
+      puts "Execution '#{summary}' produce error in creation"
     end
     issue2.fetch
   end #def
