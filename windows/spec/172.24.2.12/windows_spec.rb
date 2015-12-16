@@ -3,22 +3,26 @@ require 'spec_helper'
 describe "Operating System", windows: true do
   before(:all){
     distro = host_inventory['platform'].to_s
-    puts "La distro empleada es: #{distro}"
+    puts "\nEjecutando pruebas #{distro}"
     $errores = ""
+    $nerr = 0
   }
-  after(:each) {
+  after(:each) do |test|
     if test.exception != nil
-      $errores = $errores << "\nError en: #{test.description}"
+      $nerr += 1
+      $errores = $errores << "\n{panel:title=Error (#{$nerr}): } \n{code:java}\n{"
+      $errores = $errores << test.exception.to_s
+      $errores = $errores << "\n{code}\n{panel}"
     end
-  }
+  end 
+ 
   after(:all) {
-    puts $errores
     if $config['update_jira'] == true
       if $errores == ""
         $errores = 'No se han encontrado errores durante las pruebas.'
-        $execution.create($config['jira_project_id'],$config['jira_linux_id'],'Windows tests superados',$errores)
+        $execution.create($config['jira_project_id'],$config['jira_win_id'],'Windows tests superados',$errores)
       else
-        $execution.create($config['jira_project_id'],$config['jira_linux_id'],'Errores detectados en Windows',$errores)
+        $execution.create($config['jira_project_id'],$config['jira_win_id'],'Errores detectados en Windows',$errores)
       end
     end
   }

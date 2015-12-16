@@ -1,0 +1,21 @@
+#update_jira: False
+update_jira: True
+jira_user: 'vdc.ruby'
+jira_pass: 'VDC.ruby'
+jira_project_id: '32330'
+
+#Windows settings
+jira_win_id: '1961400'
+win_disk1_size: '53316939776' 
+memory_size: '1073741824'
+
+#IIS settings
+jira_iis_id: '1961401'
+iis_port: '80' 
+iis_folder: 'C:\\inetpub\\www'
+
+#MSSQL settings
+jira_mssql_id: '1961402'
+mssql_port: '1433'
+mssql_package_name: 'Microsoft SQL Server 2014 (64-bit)'
+

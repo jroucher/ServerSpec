@@ -6,8 +6,8 @@ class JiraRuby
   @client = nil
   
   def initialize
-    username = "vdc.ruby"
-    password = "VDC.ruby"
+    username = $config["jira_user"]
+    password = $config["jira_pass"]
     options = {
               :username  => username,
               :password  => password,

@@ -1,4 +1,6 @@
 #update_jira: False
+jira_user: 'vdc.ruby'
+jira_pass: 'VDC.ruby'
 update_jira: True
 jira_project_id: '32330'
 

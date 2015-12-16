@@ -1,6 +1,9 @@
 require 'serverspec'
 require 'winrm'
-#require 'specinfra'
+require 'yaml'
+require 'jira'
+require 'jiraruby'
+require 'specinfra'
 
 #include SpecInfra::Helper::WinRM
 #include SpecInfra::Helper::Windows
@@ -16,6 +19,13 @@ require 'winrm'
 #  c.winrm = ::WinRM::WinRMWebService.new(endpoint, :ssl, :user => user, :pass => pass, :basic_auth_only => true)
 #  c.winrm.set_timeout 30
 #end
+parsed = begin
+  $config = YAML.load(File.open("./spec/settings.yml"))
+rescue ArgumentError => e
+  puts "Could not parse YAML: #{e.message}"
+end
+
+$execution = JiraRuby.new
 
 set :backend, :winrm
 set :os, :family => 'windows'
