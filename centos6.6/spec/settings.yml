@@ -1,7 +1,7 @@
-#update_jira: False
 jira_user: 'vdc.ruby'
 jira_pass: 'VDC.ruby'
 update_jira: True
+#update_jira: False
 jira_project_id: '32330'
 
 #Windows settings
