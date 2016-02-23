@@ -1,41 +1,30 @@
-require 'rake'
-require 'rspec/core/rake_task'
-#require 'specinfra'
-require 'json'
+#require "bundler/gem_tasks"
+require "rspec/core/rake_task"
+begin
+  require "octorelease"
+rescue LoadError
+end
 
-task :spec    => 'spec:all'
-task :default => :spec
-$REPORTS ="./reports"
+if defined?(RSpec)
+  task :spec => 'spec:all'
 
-namespace :spec do
-  targets = []
-  Dir.glob('./spec/*').each do |dir|
-    next unless File.directory? (dir)
-    target = File.basename(dir)
-    target = "_#{target}" if target == "default"
-    targets << target
-  end
+  namespace :spec do
+    task :all => [ 'spec:type:all', 'spec:helper' ]
 
-  task :all     => targets
-  task :default => :all
+    namespace :type do
+      oses = Dir.glob('spec/type/*').map {|d| File.basename(d)}
 
-  targets.each do |target|
-    original_target = target == "_default" ? target[1..-1] : target
-    desc "Run serverspec tests to #{original_target}"
-    RSpec::Core::RakeTask.new(target.to_sym) do |t|
-# ========================= JSON =========================
-#      json = File.join("#{$REPORTS}", "#{target}.json")
-#      t.rspec_opts = ["--format", "json", "--out", json]
-      json = File.join("#{$REPORTS}", "#{target}.json")
-      t.rspec_opts = ["--format", "json", "--out", json]
-      puts("paso")
-      ENV['TARGET_HOST'] = original_target
-      t.pattern = "spec/#{original_target}/*_spec.rb"
+      task :all => oses.map {|os| "spec:type:#{os}" }
+
+      oses.each do |os|
+        RSpec::Core::RakeTask.new(os.to_sym) do |t|
+          t.pattern = "spec/type/#{os}/*_spec.rb"
+        end
+      end
     end
-  end
 
-  def run_task(verbose)
-    system("env TARGET_HOST=#{target} #{spec_command}")
-    status(target, json) if verbose
+    RSpec::Core::RakeTask.new(:helper) do |t|
+        t.pattern = "spec/helper/*_spec.rb"
+    end
   end
 end

@@ -1,0 +1,66 @@
+jira_user: 'vdc.ruby'
+jira_pass: 'VDC.ruby'
+update_jira: True
+#update_jira: False
+jira_project_id: '32330'
+
+#Windows settings
+win_disk1_size: '53316939776' 
+memory_size: '1073741824'
+
+#Linux Settings
+disk2_size: 49000000  #DISK
+disk1_size: 250000  #BOOT
+swap_size: 2000000  #SWAP
+memory_size: 1000000 #RAM
+jira_linux_id: '1961393'
+
+#NodeJS settings
+node_version: 'v0.10.40'
+jira_node_id: '1961397'
+#node_version: 'v0.12.7'        #version de PaaS
+
+#MongoDB settings
+mongo_version: 'v3.0.7'
+jira_mongo_id: '1961394'
+mongo_port: '27018'
+#mongo_version: 'v3.0.6'        #version de PaaS
+
+#MySQL settings
+mysql_version: '5.1.73'
+jira_mysql_id: '1961396'
+mysql_port: '3306'
+#mysql_version: '5.6'          #version de PaaS
+
+#Apache settings
+apache_version: '2.2.15'
+jira_apache_id: '1961395'
+apache_port: '80'
+#apache_version: '2.2.3'          #version de PaaS
+
+#jBoss settings
+jboss_version: ''
+jira_jboss_id: '1991244'
+
+#TomCat settings
+tomcat_version: ''
+tomcat_port: '80'
+jira_tomcat_id: '1961398'
+
+#MongoDB settings
+mongo_version: ''
+
+# WordPress settings
+lang: 'en_US'
+title: 'Welcome to the VCCW'
+rewrite_structure: '/archives/%post_id%'
+admin_user: 'miya'
+admin_pass: '1111'
+jira_wordpress_id: '1991265'
+plugins:
+  - dynamic-hostname
+  - wp-total-hacks
+  - tinymce-templates
+theme: twentyfifteen
+options:
+  blogdescription: Hello VCCW.
