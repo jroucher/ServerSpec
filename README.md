@@ -30,9 +30,13 @@ Actualmente comprueba:
 ```
   1. gem install rspec
 ```
-  * Install ServerSpec, gem install serverspec
+  * Install ServerSpec, rake, rake-task, json, date
 ```
   1. gem install serverspec
+  2. gem install rake
+  3. gem install rake-task
+  4. gem install json
+  5. gem install date
 ```
   * Dowload the project, git clone ..
   * Remember to modify the IP node to test
